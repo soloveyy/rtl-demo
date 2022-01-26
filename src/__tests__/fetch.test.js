@@ -8,7 +8,7 @@ import Fetch from '../fetch'
 // Mock
 const server = setupServer(
     rest.get('/greeting', (req, res, ctx) => {
-        return res(ctx.json({greeting: 'hello there'}))
+        return res(ctx.json({greeting: 'Text Content'}))
     }),
 )
 
@@ -18,10 +18,10 @@ afterAll(() => server.close())
 
 test('loads and displays greetings', async () => {
     render(<Fetch url="/greeting" />)
-    fireEvent.click(screen.getByText('Load greeting'))
-    await waitFor(()=> screen.getByRole('heading'))
+    fireEvent.click(screen.getByRole('button'))
+    await waitFor(()=> screen.findByRole('heading'))
 
-    expect(screen.getByRole('heading')).toHaveTextContent('hello there')
+    expect(screen.getByRole('heading')).toHaveTextContent('Text Content')
     expect(screen.getByRole('button')).toBeDisabled()
 })
 
@@ -33,8 +33,8 @@ test('handles server error', async ()=> {
     )
     render(<Fetch url="/greeting" />)
     fireEvent.click(screen.getByText('Load Greeting'))
-    await waitFor(()=> screen.getAllByRole('alert'))
+    await waitFor(()=> screen.findByRole('alert'))
 
-    expect(screen.getAllByRole('alert')).toHaveTextContent('Opps, failed to fetch!')
+    expect(screen.getByRole('alert')).toHaveTextContent('Oops, failed to fetch!')
     expect(screen.getByRole('button')).not.toBeDisabled()
 })
