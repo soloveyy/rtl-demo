@@ -1,12 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import Auth from './components/auth'
 import App from './App';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import { CookiesProvider } from 'react-cookie';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+    <React.StrictMode>
+      <CookiesProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Auth/>} />
+            <Route path="/movies" element={<App/>} />
+          </Routes>
+        </BrowserRouter>
+      </CookiesProvider>
+    </React.StrictMode>,
   document.getElementById('root')
 );
 

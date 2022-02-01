@@ -11,7 +11,8 @@ function Hello() {
             <input 
                 type="text"
                 placeholder={text}
-                onClick={(e)=>setText((e.target as HTMLInputElement).value)}/>
+                onClick={(e)=>setText((e.target as HTMLInputElement).value)}
+            />
         </>
     )
 }
