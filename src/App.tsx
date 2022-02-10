@@ -9,13 +9,14 @@ import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import { useCookies } from 'react-cookie';
 import { useFetch } from './hooks/useFetch';
 
+
 function App() {
 
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState<any>([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
-  const [editedMovie, setEditedMovie] = useState(null);
-  const [token, setToken, deleteToken] = useCookies(['mr-token']);
-  const [data, loading, error]: any = useFetch();
+  const [editedMovie, setEditedMovie] = useState<any>(null);
+  const [token, setToken, deleteToken] = useCookies<any>(['mr-token']);
+  const [data, loading, error]= useFetch();
 
   useEffect(()=>{
     setMovies(data);
@@ -25,16 +26,16 @@ function App() {
     if(!token['mr-token']) window.location.href = '/';
   }, [token])
 
-  const loadMovie = movie => {
+  const loadMovie = (movie: any) => {
     setSelectedMovie(movie);
     setEditedMovie(null);
   }
-  const editClicked = movie => {
+  const editClicked = (movie: any) => {
     setEditedMovie(movie);
     setSelectedMovie(null);
   }
-  const udpatedMovie = movie => {
-    const newMovies = movies.map( mov => {
+  const udpatedMovie = (movie: any) => {
+    const newMovies = movies.map( (mov:any) => {
       if (mov.id === movie.id) {
         return movie;
       }
@@ -47,12 +48,12 @@ function App() {
     setSelectedMovie(null);
   }
   
-  const movieCreated = movie => {
+  const movieCreated = (movie: any) => {
     const newMovies = [...movies, movie];
     setMovies(newMovies);
   }
-  const removeClicked = movie => {
-    const newMovies = movies.filter( mov => mov.id !== movie.id);
+  const removeClicked = (movie: any) => {
+    const newMovies = movies.filter( (mov:any) => mov.id !== movie.id);
     setMovies(newMovies);
   }
   const logoutUser = () => {
