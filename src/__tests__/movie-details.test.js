@@ -1,7 +1,6 @@
 import React from 'react';
 import {render, screen, fireEvent} from '@testing-library/react'
 import MovieDetails from '../components/movie-details'
-import { isExportDeclaration } from 'typescript';
 
 const selectedMovie = {
     id: 1,
@@ -18,7 +17,7 @@ describe('MovieDetails component', () =>{
     })
 
     test('should display title and description', ()=>{
-        const { getByText } = render(<MovieDetails movie={selectedMovie}/>)
+        render(<MovieDetails movie={selectedMovie}/>)
         expect(screen.getByText(selectedMovie.title)).toBeTruthy()
         expect(screen.getByText(selectedMovie.description)).toBeTruthy()
     })
@@ -38,5 +37,15 @@ describe('MovieDetails component', () =>{
             const highlighted_stars = container.querySelectorAll('.purple');
             expect(highlighted_stars.length).toBe(idx+1)
         })
+    })
+
+    test('should be called stars length time', ()=>{
+        const loadMovie = jest.fn()
+        const { container } = render(<MovieDetails movie={selectedMovie} updateMovie={loadMovie}/>)
+        const stars = container.querySelectorAll('.rate-container svg');
+        stars.forEach(star=>{
+            fireEvent.click(star)
+        })
+        setTimeout((()=>expect(loadMovie).toBeCalledTimes(stars.length)))
     })
 })
