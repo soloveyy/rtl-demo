@@ -24,6 +24,9 @@
     "typescript": "^4.5.5",
     "web-vitals": "^2.1.3"
   },
+  "jest": {
+    "resetMocks": false
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "tsc",
